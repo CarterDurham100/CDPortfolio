@@ -2,8 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]  # Change to 'master' if that's your default branch
-  workflow_dispatch:  # Allows manual trigger
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -21,19 +21,19 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.19.6'  # Adjust based on your Angular version
+          node-version: '20'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
-        run: npm run build -- --configuration production --base-href /CDPortfolio/
+        run: npx ng build --configuration production --base-href /CDPortfolio/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist/CDPortfolio'  # Adjust to match your dist folder
+          path: './dist/CDPortfolio/browser'
 
   deploy:
     environment:
